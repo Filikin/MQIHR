@@ -141,23 +141,28 @@ public with sharing class UpdateContactController
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * oneEmployee.Year_of_service__c;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * oneEmployee.Year_of_service__c;
+	    		
+	    		if (oneEmployee.Year_of_service__c == 1) oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*2;
+	    		else oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*4;
     		}
     		else if (oneEmployee.Year_of_service__c == 3)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 4;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 4;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*8;
     		}
     		else if (oneEmployee.Year_of_service__c == 4 || oneEmployee.Year_of_service__c == 5)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 5;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 5;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*12;
     		}
      		else if (oneEmployee.Year_of_service__c >= 6)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 6;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneMonthInHours * 6;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*12; 
     		}
-    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneMonthInHours*12; // this may change to be pro-rata
     		oneEmployee.X4_Year_sick_leave_remaining__c = oneEmployee.X4_Year_sick_leave_entitlement__c - oneEmployee.Sick_leave_in_last_4_years__c;
     		oneEmployee.Uncert_Paid_Sick_Leave_in_last_12_months__c = math.min (oneEmployee.Hours_per_week__c*2, oneEmployee.Uncertified_Sick_Leave_in_last_12_months__c);
     	}
@@ -167,28 +172,33 @@ public with sharing class UpdateContactController
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 4 * oneEmployee.Year_of_service__c;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 4 * oneEmployee.Year_of_service__c;
+	    		if (oneEmployee.Year_of_service__c == 1) oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 8;
+	    		else oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 16;
     		}
     		else if (oneEmployee.Year_of_service__c == 3)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 10;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 10;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 20;
     		}
     		else if (oneEmployee.Year_of_service__c == 4)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 12;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 12;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 32;
     		}
     		else if (oneEmployee.Year_of_service__c == 5)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 14;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 14;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 32;
     		}
      		else if (oneEmployee.Year_of_service__c >= 6)
     		{
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 16;
 	    		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 16;
+	    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 32;
     		}
-    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 32;
     		oneEmployee.X4_Year_sick_leave_remaining__c = oneEmployee.X4_Year_sick_leave_entitlement__c - oneEmployee.Sick_leave_in_last_4_years__c;
      		oneEmployee.Uncert_Paid_Sick_Leave_in_last_12_months__c = math.min (oneEmployee.Hours_per_week__c, oneEmployee.Uncert_Paid_Sick_Leave_in_last_12_months__c);
     	}
@@ -203,7 +213,12 @@ public with sharing class UpdateContactController
         		oneEmployee.Full_Pay_Sick_Leave_Entitlement__c = oneEmployee.Hours_per_week__c * 12;
     		}
     		oneEmployee.Half_Pay_Sick_Leave_Entitlement__c = 0;
-    		oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 12;
+    		
+    		if (oneEmployee.Year_of_service__c == 1) oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 2;
+    		else if (oneEmployee.Year_of_service__c == 2) oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 4;
+    		else if (oneEmployee.Year_of_service__c == 3) oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 6;
+	    	else oneEmployee.X4_Year_sick_leave_entitlement__c = oneEmployee.Hours_per_week__c * 12;
+    		
     		oneEmployee.X4_Year_sick_leave_remaining__c = oneEmployee.X4_Year_sick_leave_entitlement__c - oneEmployee.Sick_leave_in_last_4_years__c;
      		oneEmployee.Uncert_Paid_Sick_Leave_in_last_12_months__c = math.min (oneEmployee.Hours_per_week__c, oneEmployee.Uncert_Paid_Sick_Leave_in_last_12_months__c);
     	}
